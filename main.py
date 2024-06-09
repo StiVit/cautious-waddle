@@ -36,3 +36,13 @@ async def create_item(name: str, description: str):
     db.refresh(db_item)
     return db_item
 
+
+# Read (Get)
+@app.get("/items/{item_id}")
+async def read_item(item_id: int):
+    db = SessionLocal
+    item = db.query(Item).filter(Item.id == item_id).first()
+    return item
+
+
+
