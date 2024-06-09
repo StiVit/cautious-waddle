@@ -26,7 +26,7 @@ app = FastAPI()
 
 
 # CRUD operations
-# Create (Create)
+# Create (CREATE)
 @app.post("/items/")
 async def create_item(name: str, description: str):
     db = SessionLocal()
@@ -37,12 +37,23 @@ async def create_item(name: str, description: str):
     return db_item
 
 
-# Read (Get)
+# Read (GET)
 @app.get("/items/{item_id}")
 async def read_item(item_id: int):
-    db = SessionLocal
+    db = SessionLocal()
     item = db.query(Item).filter(Item.id == item_id).first()
     return item
+
+
+# Update (PUT)
+@app.put("/items/{item_id}")
+async def update_item(item_id: int, name: str, description: str):
+    db = SessionLocal()
+    db_item = db.query(Item).filter(Item.id == item_id).first()
+    db_item.name = name
+    db_item.description = description
+    db.commit
+    return db_item
 
 
 
