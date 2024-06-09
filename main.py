@@ -52,8 +52,19 @@ async def update_item(item_id: int, name: str, description: str):
     db_item = db.query(Item).filter(Item.id == item_id).first()
     db_item.name = name
     db_item.description = description
-    db.commit
+    db.commit()
     return db_item
 
 
+# Detele (DELETE)
+@app.delete("/items/{item_id}")
+async def delete_item(item_id: int):
+    db = SessionLocal()
+    db_item = db.query(Item).filter(Item.id == item_id).first()
+    db.delete(db_item)
+    db.commit()
+    return {"message": "Item deleted successfully"}
 
+
+if __name__ == "__main__":
+    uvicorn.run(app)
