@@ -1,19 +1,9 @@
-from database import Base, engine
+from database import Base, engine, SessionLocal
 import uvicorn
 from fastapi import FastAPI
-from sqlalchemy import Column, Integer, String
-
-
-# SQLAlchemy models
-class Item(Base):
-	__tablename__ = "items"
-	id = Column(Integer, primary_key=True, index=True)
-	name = Column(String, index=True)
-	description = Column(String, index=True)
-
+from auth.models import Item
 
 Base.metadata.create_all(bind=engine)
-
 # FastAPI app instance
 app = FastAPI()
 
