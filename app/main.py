@@ -1,7 +1,7 @@
 from database import Base, engine, SessionLocal
 import uvicorn
 from fastapi import FastAPI
-from auth.models import Item
+from src.models import Item
 
 Base.metadata.create_all(bind=engine)
 # FastAPI app instance
