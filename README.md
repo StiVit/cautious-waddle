@@ -4,16 +4,16 @@ This is a FastAPI application that demonstrates basic CRUD operations with a SQL
 
 ## Project Structure
 
-CAUTIOUS-WADDLE/
-├── app/
-│ ├── init.py
-│ ├── crud.py
-│ ├── models.py
-│ ├── schemas.py
-│ ├── database.py
-│ └── routers/
-│ ├── init.py
-│ └── items.py
+CAUTIOUS-WADDLE/<br>
+├── app/<br>
+│ ├── init.py<br>
+│ ├── crud.py<br>
+│ ├── models.py<br>
+│ ├── schemas.py<br>
+│ ├── database.py<br>
+│ └── routers/<br>
+│ ├── init.py<br>
+│ └── items.py<br>
 └── main.py
 
 
