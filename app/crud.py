@@ -15,7 +15,7 @@ def create_item(db:Session, item:ItemCreate):
     return db_item
 
 def update_item(db:Session, item_id:int, item:ItemUpdate):
-    db_item = db.query(Item).filter(Item.db == item_id).first()
+    db_item = db.query(Item).filter(Item.id == item_id).first()
     if db_item:
         db_item.name = item.name
         db_item.description = item.description
