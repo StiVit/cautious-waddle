@@ -11,7 +11,7 @@ async def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
 
 @router.get("/items/{item_id}", response_model=schemas.Item)
 async def read_item(item_id: int, db: Session = Depends(get_db)):
-    db_item = crud.get_item(db, item_id=item_id)
+    db_item = crud.get_item(db=db, item_id=item_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail="Item no found")
     return db_item
@@ -23,8 +23,11 @@ async def update_item(item_id: int, item: schemas.ItemUpdate, db: Session = Depe
         raise HTTPException(status_code=404, detail="Item not found")
     return db_item
 
-@router.delete("/items/{item_id}", response_model=schemas.Item)
+@router.delete("/items/{item_id}", response_model=dict)
 async def delete_item(item_id:int, db: Session = Depends(get_db)):
+    db_item = crud.get_item(db, item_id=item_id)
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
     crud.delete_item(db=db, item_id=item_id)
     return {"message": "Item deleted successfully"}
 

@@ -8,7 +8,7 @@ def get_item(db:Session, item_id: int):
     return db.query(Item).filter(Item.id == item_id).first()
 
 def create_item(db:Session, item:ItemCreate):
-    db_item = Item(name = item.name, description=item.description)
+    db_item = Item(**item.dict())
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
