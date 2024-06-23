@@ -4,13 +4,15 @@ services:
   postgres:
     image: postgres:14-alpine
     ports:
-      -5432:5432
+      - 5432:5432
     volumes:
-      -./init.sql:/docker-entrypoint-initdb.d/init.sql
-      -postgres-data:/data/postgres
+      - postgres-data:/data/postgres
     environment:
       - POSTGRES_PASSWORD=sage
       - POSTGRES_USER=sage
       - POSTGRES_DB=sage
+
+    airflow:
+      image
 volumes:
-  postgres_data:
+  postgres-data:
