@@ -1,6 +1,6 @@
 # app/models.py
 
-from sqlalchemy import Column, Integer, String, Date, Double
+from sqlalchemy import Column, Integer, String, Date, Double, ForeignKey
 from app.database import Base
 from enumerations.region import Region
 from enumerations.payment_method import PaymentMethod
@@ -12,7 +12,7 @@ class Transaction(Base):
 	
 	transaction_id = Column(Integer, primary_key=True, index=True)
 	date = Column(Date, index=True)
-	product_id = Column(String, index=True, key=True)
+	product_id = Column(ForeignKey, index=True)
 	units_sold = Column(Integer, index=True)
 	total_revenue = Column(Integer, index=True)
 	region = Column(Region, index=True)
@@ -22,6 +22,7 @@ class Transaction(Base):
 class Product(Base):
 	__tablename__ =  "products"
 
+	product_id = Column(Integer, primary_key=True, index=True)
 	product_category = Column(ProductCategory, index= True)
 	product_name = Column(String, index=True)
 	unit_price = Column(Double, index=True)
