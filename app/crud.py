@@ -1,7 +1,7 @@
 # app/crud.py
 
 from sqlalchemy.orm import Session
-from app.models import Item
+from app.models.models import Item
 from app.schemas import ItemCreate, ItemUpdate
 
 def get_item(db:Session, item_id: int):
