@@ -1,31 +1,54 @@
 # app/crud.py
 
 from sqlalchemy.orm import Session
-from app.models.models import Item
-from app.schemas import ItemCreate, ItemUpdate
+from app.models.models import Transaction, Product
+from app.schemas import TransactionCreate, ProductCreate, TransactionUpdate, ProductUpdate
+from enumerations.region import Region
+from enumerations.payment_method import PaymentMethod
+from enumerations.product_category import ProductCategory
 
-def get_item(db:Session, item_id: int):
-    return db.query(Item).filter(Item.id == item_id).first()
+def get_transaction(db:Session, transaction_id: int):
+    return db.query(Transaction).filter(Transaction.id == transaction_id).first()
 
-def create_item(db:Session, item:ItemCreate):
-    db_item = Item(**item.dict())
-    db.add(db_item)
+def create_transaction(db:Session, transaction:TransactionCreate, product: ProductCreate):
+    db_transaction = Transaction(**transaction.dict())
+    db_product = Product(**product.dict())
+    db.add(db_transaction)
+    db.add(db_product)
     db.commit()
-    db.refresh(db_item)
-    return db_item
+    db.refresh(db_transaction)
+    db.refresh(db_product)
+    return db_transaction
 
-def update_item(db:Session, item_id:int, item:ItemUpdate):
-    db_item = db.query(Item).filter(Item.id == item_id).first()
-    if db_item:
-        db_item.name = item.name
-        db_item.description = item.description
+def update_transaction(db:Session, transaction_id:int, transaction:TransactionUpdate):
+    db_transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+    if db_transaction:
+        db_transaction.date = transaction.date
+        db_transaction.product_id = transaction.product_id
+        db_transaction.units_sold = transaction.units_sold
+        db_transaction.total_revenue = transaction.total_revenue
+        if isinstance(transaction.region, Region):
+            db_transaction.region = transaction.region
+        if isinstance(transaction.payment_method, PaymentMethod):
+            db_transaction.payment_method = transaction.payment_method
         db.commit()
-        db.refresh(db_item)
-    return db_item
+        db.refresh(db_transaction)
+    return db_transaction
 
-def delete_item(db:Session, item_id: int):
-    db_item = db.query(Item).filter(Item.id == item_id).first()
-    if db_item:
-        db.delete(db_item)
+def update_product(db:Session, product_id:int, product:ProductUpdate):
+    db_product = db.query(Product).filter(Product.id == product_id).first()
+    if db_product:
+        if isinstance(db_product.product_category, ProductCategory):
+            db_product.product_category = product.product_category
+        db_product.product_name = product.product_name
+        db_product.unit_price = product.unit_price
+    db.commit()
+    db.refresh(db_product)
+    return db_product
+
+def delete_transaction(db:Session, transaction_id: int):
+    db_transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+    if db_transaction:
+        db.delete(db_transaction)
         db.commit()
-    return db_item
+    return db_transaction
