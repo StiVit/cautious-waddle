@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Database configurations
-SQLALCHEMY_DATABASE_URL = "postgresql://sage:sage@localhost:5432/sage"
+SQLALCHEMY_DATABASE_URL = "postgresql://sale:sale@localhost:5432/sale"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

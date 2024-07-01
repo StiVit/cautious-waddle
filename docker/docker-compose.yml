@@ -8,9 +8,9 @@ services:
     volumes:
       - postgres-data:/data/postgres
     environment:
-      - POSTGRES_PASSWORD=sage
-      - POSTGRES_USER=sage
-      - POSTGRES_DB=sage
+      - POSTGRES_PASSWORD=sale
+      - POSTGRES_USER=sale
+      - POSTGRES_DB=sale
 
     airflow:
       image
