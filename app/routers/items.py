@@ -6,29 +6,43 @@ from app.models import models
 
 router = APIRouter()
 
-@router.post("/items/", response_model=schemas.Item)
-async def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
-    return crud.create_item(db=db, item=item)
+@router.post("/transactions/", response_model=schemas.Transaction)
+async def create_transaction(transaction: schemas.Transaction, product: schemas.Product, db: Session = Depends(get_db)):
+    return crud.create_transaction(db=db, transaction=transaction, product=product)
 
-@router.get("/items/{item_id}", response_model=schemas.Item)
-async def read_item(item_id: int, db: Session = Depends(get_db)):
-    db_item = crud.get_item(db=db, item_id=item_id)
-    if db_item is None:
-        raise HTTPException(status_code=404, detail="Item no found")
-    return db_item
+@router.get("/transactions/{transaction_id}", response_model=schemas.Transaction)
+async def read_transaction(transactoin_id: int, db: Session = Depends(get_db)):
+    db_transaction = crud.get_transaction(db=db, transaction_id=transactoin_id)
+    if db_transaction is None:
+        raise HTTPException(status_code=404, detail="Transaction no found")
+    return db_transaction
 
-@router.put("/items/{item_id}", response_model=schemas.Item)
-async def update_item(item_id: int, item: schemas.ItemUpdate, db: Session = Depends(get_db)):
-    db_item = crud.update_item(db=db, item_id=item_id, item = item)
-    if db_item is None:
-        raise HTTPException(status_code=404, detail="Item not found")
-    return db_item
+@router.get("products/{product_id}", response_model=schemas.Product)
+async def read_product(product_id: int, db: Session = Depends(get_db)):
+    db_product = crud.get_product(db=db, product_id=product_id)
+    if db_product is None:
+        raise HTTPException(status_code=404, detail="Product no found")
+    return db_product
 
-@router.delete("/items/{item_id}", response_model=dict)
-async def delete_item(item_id:int, db: Session = Depends(get_db)):
-    db_item = crud.get_item(db, item_id=item_id)
-    if db_item is None:
-        raise HTTPException(status_code=404, detail="Item not found")
-    crud.delete_item(db=db, item_id=item_id)
-    return {"message": "Item deleted successfully"}
+@router.put("/transaction/{transaction_id}", response_model=schemas.Transaction)
+async def update_transaction(transaction_id: int, transaction: schemas.TransactionUpdate, db:Session = Depends(get_db)):
+    db_transaction = crud.update_transaction(db=db, transaction_id=transaction_id, transaction=transaction)
+    if db_transaction is None:
+        raise HTTPException(status_code=404, detail="Transaction no found")
+    return db_transaction
+
+@router.put("/product/{product_id}", response_model=schemas.Product)
+async def update_product(product_id: int, product: schemas.ProductUpdate, db:Session = Depends(get_db)):
+    db_product = crud.update_product(db=db, product_id=product_id, product=product)
+    if db_product is None:
+        raise HTTPException(status_code=404, detail="Product no found")
+    return db_product
+
+@router.delete("/transaction/{transaction_id}", response_model=dict)
+async def delete_transaction(transaction_id: int, db: Session = Depends(get_db)):
+    db_transaction = crud.get_transaction(db=db, transaction_id=transaction_id)
+    if db_transaction is None:
+        raise HTTPException(status_code=404, detail="Transaction no found")
+    crud.delete_transaction(db=db, transaction_id=transaction_id)
+    return {"message": "Transaction deleted successfully"}
 

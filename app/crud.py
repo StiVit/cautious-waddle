@@ -35,6 +35,9 @@ def update_transaction(db:Session, transaction_id:int, transaction:TransactionUp
         db.refresh(db_transaction)
     return db_transaction
 
+def get_product(db:Session, product_id:int):
+    return db.query(Product).filter(Product.product_id == product_id).first()
+
 def update_product(db:Session, product_id:int, product:ProductUpdate):
     db_product = db.query(Product).filter(Product.id == product_id).first()
     if db_product:
