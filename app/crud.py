@@ -3,9 +3,9 @@
 from sqlalchemy.orm import Session
 from app.models.models import Transaction, Product
 from app.schemas import TransactionCreate, ProductCreate, TransactionUpdate, ProductUpdate
-from enumerations.region import Region
-from enumerations.payment_method import PaymentMethod
-from enumerations.product_category import ProductCategory
+from app.enumerations.region import Region
+from app.enumerations.payment_method import PaymentMethod
+from app.enumerations.product_category import ProductCategory
 
 def get_transaction(db:Session, transaction_id: int):
     return db.query(Transaction).filter(Transaction.id == transaction_id).first()

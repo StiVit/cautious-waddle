@@ -17,7 +17,7 @@ async def read_transaction(transactoin_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Transaction no found")
     return db_transaction
 
-@router.get("products/{product_id}", response_model=schemas.Product)
+@router.get("/products/{product_id}", response_model=schemas.Product)
 async def read_product(product_id: int, db: Session = Depends(get_db)):
     db_product = crud.get_product(db=db, product_id=product_id)
     if db_product is None:

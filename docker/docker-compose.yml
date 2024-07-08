@@ -11,8 +11,5 @@ services:
       - POSTGRES_PASSWORD=sale
       - POSTGRES_USER=sale
       - POSTGRES_DB=sale
-
-    airflow:
-      image
 volumes:
   postgres-data:
