@@ -7,8 +7,12 @@ from app.models import models
 router = APIRouter()
 
 @router.post("/transactions/", response_model=schemas.Transaction)
-async def create_transaction(transaction: schemas.Transaction, product: schemas.Product, db: Session = Depends(get_db)):
-    return crud.create_transaction(db=db, transaction=transaction, product=product)
+async def create_transaction(transaction: schemas.Transaction, db: Session = Depends(get_db)):
+    return crud.create_transaction(db=db, transaction=transaction)
+
+@router.post("/products/", response_model=schemas.Product)
+async def create_product(product: schemas.ProductCreate, db=Depends(get_db)):
+    return crud.create_product(db=db, product=product)
 
 @router.get("/transactions/{transaction_id}", response_model=schemas.Transaction)
 async def read_transaction(transactoin_id: int, db: Session = Depends(get_db)):

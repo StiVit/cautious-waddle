@@ -8,20 +8,24 @@ from app.enumerations.payment_method import PaymentMethod
 from app.enumerations.product_category import ProductCategory
 
 def get_transaction(db:Session, transaction_id: int):
-    return db.query(Transaction).filter(Transaction.id == transaction_id).first()
+    return db.query(Transaction).filter(Transaction.transaction_id == transaction_id).first()
 
-def create_transaction(db:Session, transaction:TransactionCreate, product: ProductCreate):
+def create_transaction(db:Session, transaction:TransactionCreate):
     db_transaction = Transaction(**transaction.dict())
-    db_product = Product(**product.dict())
     db.add(db_transaction)
-    db.add(db_product)
     db.commit()
     db.refresh(db_transaction)
-    db.refresh(db_product)
     return db_transaction
 
+def create_product(db:Session, product: ProductCreate):
+    db_product = Product(**product.dict())
+    db.add(db_product)
+    db.commit()
+    db.refresh(db_product)
+    return db_product
+
 def update_transaction(db:Session, transaction_id:int, transaction:TransactionUpdate):
-    db_transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+    db_transaction = db.query(Transaction).filter(Transaction.transaction_id == transaction_id).first()
     if db_transaction:
         db_transaction.date = transaction.date
         db_transaction.product_id = transaction.product_id
@@ -39,7 +43,7 @@ def get_product(db:Session, product_id:int):
     return db.query(Product).filter(Product.product_id == product_id).first()
 
 def update_product(db:Session, product_id:int, product:ProductUpdate):
-    db_product = db.query(Product).filter(Product.id == product_id).first()
+    db_product = db.query(Product).filter(Product.product_id == product_id).first()
     if db_product:
         if isinstance(db_product.product_category, ProductCategory):
             db_product.product_category = product.product_category
@@ -50,7 +54,7 @@ def update_product(db:Session, product_id:int, product:ProductUpdate):
     return db_product
 
 def delete_transaction(db:Session, transaction_id: int):
-    db_transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+    db_transaction = db.query(Transaction).filter(Transaction.transaction_id == transaction_id).first()
     if db_transaction:
         db.delete(db_transaction)
         db.commit()

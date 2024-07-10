@@ -21,7 +21,7 @@ class TransactionUpdate(TransactionBase):
     pass
 
 class Transaction(TransactionBase):
-    id:int
+    transaction_id:int
 
     class Config:
         orm_mode = True
@@ -39,7 +39,7 @@ class ProductUpdate(ProductBase):
     pass
 
 class Product(ProductBase):
-    id:int
+    product_id:int
 
     class Config:
         orm_mode = True
