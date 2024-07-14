@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app import crud, schemas
 from app.database import get_db
 from app.models import models
-
+# TODO: add logs (if env is DEVELOPMENT -> log.debug , else -> log.info or log.error)
 router = APIRouter()
 
 @router.post("/transactions/", response_model=schemas.Transaction)

@@ -26,15 +26,19 @@ def create_product(db:Session, product: ProductCreate):
 
 def update_transaction(db:Session, transaction_id:int, transaction:TransactionUpdate):
     db_transaction = db.query(Transaction).filter(Transaction.transaction_id == transaction_id).first()
+    
     if db_transaction:
         db_transaction.date = transaction.date
         db_transaction.product_id = transaction.product_id
         db_transaction.units_sold = transaction.units_sold
         db_transaction.total_revenue = transaction.total_revenue
+
         if isinstance(transaction.region, Region):
             db_transaction.region = transaction.region
+
         if isinstance(transaction.payment_method, PaymentMethod):
             db_transaction.payment_method = transaction.payment_method
+
         db.commit()
         db.refresh(db_transaction)
     return db_transaction
