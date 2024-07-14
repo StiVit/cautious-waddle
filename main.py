@@ -13,8 +13,6 @@ app = FastAPI()
 
 app_logger = setup_logger('app_logger', logging.INFO)
 
-
-
 # Include routers
 app.include_router(endpoints.router, prefix="/api", tags=["items"])
 
@@ -23,4 +21,4 @@ if __name__ == "__main__":
     port = 8000
     app_logger.info('This is an info message')
     run_script()
-    uvicorn.run(app, host = host, port=port)
+    uvicorn.run(app, host=host, port=port)
