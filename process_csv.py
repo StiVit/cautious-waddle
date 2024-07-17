@@ -8,10 +8,12 @@ from app.enumerations.payment_method import PaymentMethod
 from app.enumerations.region import Region
 from app.enumerations.product_category import ProductCategory
 from sqlalchemy import exists
+from app.utils.logging import setup_logger
 
 
 # TODO: add docstrings
 # TODO: add logs
+csv_logger = setup_logger("csv_logger")
 
 def format_data(df):
     products = df[['Product Category', 'Product Name', 'Unit Price']].drop_duplicates().reset_index(drop=True)
@@ -77,8 +79,8 @@ def run_script():
     data_exists = session.query(exists().where(Transaction.transaction_id.isnot(None))).scalar()
 
     if data_exists:
+        csv_logger.info("Database not empty")
+    else:
         insert_data(session=session, products=products, transactions=transactions)
         session.close()
-    else:
-        # TODO: Add log for this
-        print("database not empty")
+        csv_logger.info("Data transferred successfully")

@@ -19,6 +19,6 @@ app.include_router(endpoints.router, prefix="/api", tags=["items"])
 if __name__ == "__main__":
     host = "localhost"
     port = 8000
-    app_logger.info('This is an info message')
+    app_logger.info('App running successfully')
     run_script()
     uvicorn.run(app, host=host, port=port)
