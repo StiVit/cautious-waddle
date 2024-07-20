@@ -1,21 +1,26 @@
 import pandas as pd
-from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-
 from app.database import SessionLocal
 from app.models.models import Transaction, Product
 from app.enumerations.payment_method import PaymentMethod
 from app.enumerations.region import Region
 from app.enumerations.product_category import ProductCategory
 from sqlalchemy import exists
-from app.utils.logging import setup_logger
+from app.utils.logger_config import setup_logger
 
-
-# TODO: add docstrings
-# TODO: add logs
 csv_logger = setup_logger("csv_logger")
 
+
 def format_data(df):
+    """
+    Takes one table of data and separates it into two different tables: products and transactions
+
+    Input parameters:
+        df - dataframe with all the columns from the csv file
+    Output parameters:
+        products - table with the following columns ['product_id', 'Product Category', 'Product Name', 'Unit Price']
+        transactions - table with the following columns ['Transaction ID', 'Date', 'Units Sold', 'Total Revenue', 'Region', 'Payment Method']
+    """
     products = df[['Product Category', 'Product Name', 'Unit Price']].drop_duplicates().reset_index(drop=True)
     products["product_id"] = products.index + 1
 
@@ -48,6 +53,9 @@ def format_data(df):
 
 
 def run_script():
+    """
+    Transfers all the data from a csv file into a docker container with 2 different tables
+    """
     df = pd.read_csv("dataset/Online Sales Data.csv")
     products, transactions = format_data(df=df)
 
@@ -60,6 +68,7 @@ def run_script():
                 product_name=row['product_name'],
                 unit_price=row['unit_price']
             ))
+        csv_logger.info("Products data inserted successfully")
 
         # Insert transactions
         for _, row in transactions.iterrows():
@@ -72,6 +81,7 @@ def run_script():
                 region=row['region'],
                 payment_method=row['payment_method']
             ))
+        csv_logger.info("Transactions data inserted successfully")
 
         session.commit()
 

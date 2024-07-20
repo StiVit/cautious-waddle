@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from app.database import engine, Base
 from app.routers import endpoints
 from process_csv import run_script
-from app.utils.logging import setup_logger
+from app.utils.logger_config import setup_logger
 
 Base.metadata.create_all(bind=engine)
 # FastAPI app instance

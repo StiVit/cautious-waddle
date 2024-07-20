@@ -1,2 +1,5 @@
+import os
+from dotenv import load_dotenv
 
-# TODO: Extract info from env and spread across system
+load_dotenv()
+global_environment = os.getenv("GLOBAL_ENVIRONMENT")
