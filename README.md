@@ -6,126 +6,98 @@ This is a FastAPI application that demonstrates basic CRUD operations with a SQL
 
 CAUTIOUS-WADDLE/<br>
 ├── app/<br>
+│ └── enumerations/ <br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── payment_method.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── product_category.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── region.py<br>
+│ └── models/ <br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── models.py<br>
+│ └── routers/ <br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── endpoints.py<br>
+│ └── utils/ <br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── config.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── logger_config.py<br>
 │ ├── init.py<br>
 │ ├── crud.py<br>
-│ ├── models.py<br>
 │ ├── schemas.py<br>
-│ ├── database.py<br>
-│ └── routers/<br>
-│     ├── init.py<br>
-│     └── items.py<br>
-└── main.py
+│ └── database.py<br>
+├── database/<br>
+│ └── Online Sales Data.csv <br>
+├── docker/<br>
+│ └── docker-compose.yml <br>
+├── process_csv.py <br>
+├── .env.template <br>
+└── main.py <br>
 
 
-## Requirements
-
-- Python 3.8+
-- FastAPI
-- SQLAlchemy
-- Uvicorn
-- Pydantic
-
-## Installation
-
-
-- **main.py**: Main application file that initializes FastAPI and includes routers, Entry point to start the application with Uviorn.
-- **app/database.py**: Database configuration and session management.
-- **app/models.py**: SQLAlchemy models.
-- **app/schemas.py**: Pydantic schemas for data validation.
-- **app/crud.py**: CRUD operation functions.
-- **app/routers/items.py**: API endpoints for items.
-
-## Setup and Installation
+## Getting Started
 
 ### Prerequisites
 
-- Python 3.7+
-- SQLite (or another supported database)
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-### Installation Steps
+### Installation
 
-1. **Clone the repository:**
-
-    ```bash
+1. Clone the repository:
+    ```sh
     git clone https://github.com/StiVit/CAUTIOUS-WADDLE.git
     cd CAUTIOUS-WADDLE
     ```
 
-2. **Create and activate a virtual environment:**
-
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+2. Create a `.env` file from the `.env.template`:
+    ```sh
+    cp .env.template .env
     ```
 
-3. **Install the dependencies:**
-
-    ```bash
-    pip install -r requirements.txt
+3. Build and run the Docker containers:
+    ```sh
+    docker-compose up --build
     ```
 
-4. **Run the application:**
+### Usage
 
-    ```bash
-    python run.py
-    ```
+1. Launch the `main.py` file from console to transfer the data into the docker and access all the features
+2. Access the application at `http://localhost:8000/docs` after starting the Docker containers.
+3. Use the following endpoints to interact with the application:
 
-    The application will be available at `http://127.0.0.1:8000`.
+    - **Create**: `POST /transactions`
+    - **Create**: `POST /products`
+    - **Read**: `GET /transactions/{transaction_id}`
+    - **Read**: `GET /products/{product_id}`
+    - **Update**: `PUT /transaction/{transaction_id}`
+    - **Update**: `PUT /product/{product_id}`
+    - **Delete**: `DELETE /transaction/{transaction_id}`
 
-## Usage
+### Project Modules
 
-### API Endpoints
-
-- **Create an item**
-
-    ```http
-    POST /api/items/
-    ```
-
-    Request body:
-
-    ```json
-    {
-        "name": "Item name",
-        "description": "Item description"
-    }
-    ```
-
-- **Read an item**
-
-    ```http
-    GET /api/items/{item_id}
-    ```
-
-- **Update an item**
-
-    ```http
-    PUT /api/items/{item_id}
-    ```
-
-    Request body:
-
-    ```json
-    {
-        "name": "Updated item name",
-        "description": "Updated item description"
-    }
-    ```
-
-- **Delete an item**
-
-    ```http
-    DELETE /api/items/{item_id}
-    ```
-
-### Swagger UI
-
-You can access the interactive API documentation at `http://127.0.0.1:8000/docs`.
+- **app/enumerations**: Contains enumerations for various categories like payment methods, product categories, and regions.
+- **app/models**: Contains the data models for the application.
+- **app/routers**: Contains the API endpoints.
+- **app/utils**: Contains utility functions and configurations.
+- **database**: Contains the initial CSV data file.
+- **docker**: Contains the Docker Compose configuration.
+- **process_csv.py**: Script to process the CSV file.
+- **main.py**: The main entry point of the application.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request or open an Issue.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Create a new Pull Request.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Inspiration
+- References
+
