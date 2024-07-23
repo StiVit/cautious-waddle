@@ -49,11 +49,62 @@ CAUTIOUS-WADDLE/<br>
     cd CAUTIOUS-WADDLE
     ```
    
-2. **Run the make command:**
+2. **Run the Makefile:**
 
-    ```bash
+    Use the `make` command to automate the setup process.
+
+    ```sh
     make
     ```
+
+    This command will perform the following steps:
+    - Create a virtual environment (`venv`)
+    - Activate the virtual environment
+    - Install the dependencies from `requirements.txt`
+    - Create a `.env` file from the `.env.template`
+    - Build and run the Docker containers
+
+    **Note:** The virtual environment activation step will print a message on how to manually activate the virtual environment. Follow the instructions for your operating system:
+
+    - On Linux and macOS:
+      ```sh
+      source venv/bin/activate
+      ```
+    - On Windows:
+      ```sh
+      venv\Scripts\activate
+      ```
+
+## Manual Steps (if not using Makefile)
+
+If you prefer to run each step manually, follow these commands:
+
+1. **Create and activate a virtual environment:**
+
+    ```sh
+    python -m venv venv
+    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    ```
+
+2. **Install the dependencies:**
+
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+3. **Create a `.env` file from the `.env.template`:**
+
+    ```sh
+    cp .env.template .env
+    ```
+
+4. **Build and run the Docker containers:**
+
+    ```sh
+    docker-compose up --build
+    ```
+
+Now you have your development environment set up and the application running. Enjoy coding!
 
 ### Usage
 
