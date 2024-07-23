@@ -1,15 +1,15 @@
-import os
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app import crud, schemas
 from app.database import get_db
 from app.utils.logger_config import setup_logger
+from app.utils.config import back_env
 import logging
 
 router = APIRouter()
 load_dotenv()
-endpoint_logger = setup_logger("endpoint_logger", logging.INFO if os.getenv("GLOBAL_ENVIRONMENT") == "INFO" else logging.DEBUG)
+endpoint_logger = setup_logger("endpoint_logger", logging.INFO if back_env == "DEV" else logging.DEBUG)
 
 
 @router.post("/transactions/", response_model=schemas.Transaction)

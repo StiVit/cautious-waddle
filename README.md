@@ -48,15 +48,11 @@ CAUTIOUS-WADDLE/<br>
     git clone https://github.com/StiVit/CAUTIOUS-WADDLE.git
     cd CAUTIOUS-WADDLE
     ```
+   
+2. **Run the make command:**
 
-2. Create a `.env` file from the `.env.template`:
-    ```sh
-    cp .env.template .env
-    ```
-
-3. Build and run the Docker containers:
-    ```sh
-    docker-compose up --build
+    ```bash
+    make
     ```
 
 ### Usage

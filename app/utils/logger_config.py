@@ -1,8 +1,8 @@
 import logging
-from config import global_environment
+from config import back_env
 
 
-def setup_logger(name: str, level: int = logging.INFO if global_environment == "INFO" else logging.DEBUG) -> logging.Logger:
+def setup_logger(name: str, level: int = logging.INFO if back_env == "INFO" else logging.DEBUG) -> logging.Logger:
     """
     Function to setup a logger with a specific name and log level.
     Logs are output to the console.
