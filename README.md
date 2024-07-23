@@ -7,28 +7,28 @@ This is a FastAPI application that demonstrates basic CRUD operations with a SQL
 CAUTIOUS-WADDLE/<br>
 ├── app/<br>
 │ └── enumerations/ <br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── payment_method.py<br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── product_category.py<br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── region.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── payment_method.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── product_category.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── region.py<br>
 │ └── models/ <br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── models.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── models.py<br>
 │ └── routers/ <br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── endpoints.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── endpoints.py<br>
 │ └── utils/ <br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── config.py<br>
-│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── logger_config.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── init.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;├── config.py<br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── logger_config.py<br>
 │ ├── init.py<br>
 │ ├── crud.py<br>
 │ ├── schemas.py<br>
 │ └── database.py<br>
 ├── database/<br>
-│ └── Online Sales Data.csv <br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── Online Sales Data.csv <br>
 ├── docker/<br>
-│ └── docker-compose.yml <br>
+│ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;└── docker-compose.yml <br>
 ├── process_csv.py <br>
 ├── .env.template <br>
 └── main.py <br>
