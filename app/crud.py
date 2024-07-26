@@ -1,5 +1,5 @@
 # app/crud.py
-
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.models.models import Transaction, Product
 from app.schemas import TransactionCreate, ProductCreate, TransactionUpdate, ProductUpdate
@@ -70,3 +70,14 @@ def delete_transaction(db: Session, transaction_id: int):
         db.delete(db_transaction)
         db.commit()
     return db_transaction
+
+
+def get_revenue_for_period(db: Session, start_date: str, end_date: str) -> float:
+    query = text("""
+        SELECT SUM(total_revenue)
+        FROM Transaction
+        WHERE date BETWEEN :start_date AND :end_date
+    """)
+    result = db.execute(query, {"start_date": start_date, "end_date": end_date})
+    total_revenue = result.scalar()
+    return total_revenue if total_revenue else 0.0

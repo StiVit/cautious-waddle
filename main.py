@@ -22,4 +22,5 @@ if __name__ == "__main__":
     port = 8000
     app_logger.info('App running successfully')
     run_script()
+
     uvicorn.run(app, host=host, port=port)
