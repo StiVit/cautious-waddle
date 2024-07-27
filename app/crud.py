@@ -12,6 +12,10 @@ def get_transaction(db: Session, transaction_id: int):
     return db.query(Transaction).filter(Transaction.transaction_id == transaction_id).first()
 
 
+def get_product(db: Session, product_id: int):
+    return db.query(Product).filter(Product.product_id == product_id).first()
+
+
 def create_transaction(db: Session, transaction: TransactionCreate):
     db_transaction = Transaction(**transaction.dict())
     db.add(db_transaction)
@@ -48,10 +52,6 @@ def update_transaction(db: Session, transaction_id: int, transaction: Transactio
     return db_transaction
 
 
-def get_product(db: Session, product_id: int):
-    return db.query(Product).filter(Product.product_id == product_id).first()
-
-
 def update_product(db: Session, product_id: int, product: ProductUpdate):
     db_product = db.query(Product).filter(Product.product_id == product_id).first()
     if db_product:
@@ -75,7 +75,7 @@ def delete_transaction(db: Session, transaction_id: int):
 def get_revenue_for_period(db: Session, start_date: str, end_date: str) -> float:
     query = text("""
         SELECT SUM(total_revenue)
-        FROM Transaction
+        FROM transactions
         WHERE date BETWEEN :start_date AND :end_date
     """)
     result = db.execute(query, {"start_date": start_date, "end_date": end_date})

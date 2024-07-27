@@ -1,3 +1,4 @@
+from click import DateTime
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -46,7 +47,7 @@ async def read_product(product_id: int, db: Session = Depends(get_db)):
         return db_product
 
 
-@router.put("/transaction/{transaction_id}", response_model=schemas.Transaction)
+@router.put("/transactions/{transaction_id}", response_model=schemas.Transaction)
 async def update_transaction(transaction_id: int, transaction: schemas.TransactionUpdate,
                              db: Session = Depends(get_db)):
     db_transaction = crud.update_transaction(db=db, transaction_id=transaction_id, transaction=transaction)
@@ -58,7 +59,7 @@ async def update_transaction(transaction_id: int, transaction: schemas.Transacti
         return db_transaction
 
 
-@router.put("/product/{product_id}", response_model=schemas.Product)
+@router.put("/products/{product_id}", response_model=schemas.Product)
 async def update_product(product_id: int, product: schemas.ProductUpdate, db: Session = Depends(get_db)):
     db_product = crud.update_product(db=db, product_id=product_id, product=product)
 
@@ -69,7 +70,7 @@ async def update_product(product_id: int, product: schemas.ProductUpdate, db: Se
         return db_product
 
 
-@router.delete("/transaction/{transaction_id}", response_model=dict)
+@router.delete("/transactions/{transaction_id}", response_model=dict)
 async def delete_transaction(transaction_id: int, db: Session = Depends(get_db)):
     db_transaction = crud.get_transaction(db=db, transaction_id=transaction_id)
 
@@ -79,3 +80,13 @@ async def delete_transaction(transaction_id: int, db: Session = Depends(get_db))
         endpoint_logger.info(f"Transaction {transaction_id} successfully deleted")
         crud.delete_transaction(db=db, transaction_id=transaction_id)
         return {"message": "Transaction deleted successfully"}
+
+
+@router.get("/transactions/{start_date}/{end_date}", response_model=float)
+async def measure_total_revenue(start_date: str, end_date: str, db: Session = Depends(get_db)):
+    try:
+        total_revenue = crud.get_revenue_for_period(db, start_date, end_date)
+        endpoint_logger.info(f"Total revenue for: {start_date} - {end_date} = {total_revenue}")
+        return total_revenue
+    finally:
+        db.close()

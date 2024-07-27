@@ -7,7 +7,6 @@ from app.routers import endpoints
 from process_csv import run_script
 from app.utils.logger_config import setup_logger
 from app.utils.config import back_env
-from app.analysis.total_revenue_period import measure_total_revenue
 
 Base.metadata.create_all(bind=engine)
 # FastAPI app instance
@@ -23,5 +22,4 @@ if __name__ == "__main__":
     port = 8000
     app_logger.info('App running successfully')
     run_script()
-    app_logger.info(f"Total revenue for 2024-01-01: 2024-07-01 = {measure_total_revenue('2024-01-01', '2024-07-01')}")
     uvicorn.run(app, host=host, port=port)
