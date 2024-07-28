@@ -6,6 +6,7 @@ from app import crud, schemas
 from app.database import get_db
 from app.utils.logger_config import setup_logger
 from app.utils.config import back_env
+from app import date_formating
 import logging
 
 router = APIRouter()
@@ -82,8 +83,32 @@ async def delete_transaction(transaction_id: int, db: Session = Depends(get_db))
         return {"message": "Transaction deleted successfully"}
 
 
-@router.get("/transactions/{start_date}/{end_date}", response_model=float)
+@router.get("/transactions/period/{start_date}/{end_date}", response_model=float)
 async def measure_total_revenue(start_date: str, end_date: str, db: Session = Depends(get_db)):
+    try:
+        total_revenue = crud.get_revenue_for_period(db, start_date, end_date)
+        endpoint_logger.info(f"Total revenue for: {start_date} - {end_date} = {total_revenue}")
+        return total_revenue
+    finally:
+        db.close()
+
+
+@router.get("/transactions/days/{start_date}/{days_number}", response_model=float)
+async def total_revenue_days(days_number: int, start_date: str, db: Session = Depends(get_db)):
+    end_date = date_formating.add_days(start_date, days_number)
+    print(end_date)
+    try:
+        total_revenue = crud.get_revenue_for_period(db, start_date, end_date)
+        endpoint_logger.info(f"Total revenue for: {start_date} - {end_date} = {total_revenue}")
+        return total_revenue
+    finally:
+        db.close()
+
+
+@router.get("/transactions/months/{start_date}/{months_number}", response_model=float)
+async def total_revenue_days(months_number: int, start_date: str, db: Session = Depends(get_db)):
+    end_date = date_formating.add_months(start_date, months_number)
+    print(end_date)
     try:
         total_revenue = crud.get_revenue_for_period(db, start_date, end_date)
         endpoint_logger.info(f"Total revenue for: {start_date} - {end_date} = {total_revenue}")
