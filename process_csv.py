@@ -24,8 +24,7 @@ def format_data(df):
     products = df[['Product Category', 'Product Name', 'Unit Price']].drop_duplicates().reset_index(drop=True)
     products["product_id"] = products.index + 1
 
-    transactions = df[['Date', 'Units Sold', 'Total Revenue', 'Region', 'Payment Method']]
-    transactions["transaction_id"] = transactions.index + 1
+    transactions = df[['Transaction ID', 'Date', 'Units Sold', 'Total Revenue', 'Region', 'Payment Method']]
 
     products = products.rename(columns={
         'Product Category': 'product_category',
@@ -34,6 +33,7 @@ def format_data(df):
     })
 
     transactions = transactions.rename(columns={
+        'Transaction ID': 'transaction_id',
         'Date': 'date',
         'Units Sold': 'units_sold',
         'Total Revenue': 'total_revenue',
