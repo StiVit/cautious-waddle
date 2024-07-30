@@ -1,5 +1,5 @@
 import logging
-from config import back_env
+from .config import back_env
 
 
 def setup_logger(name: str, level: int = logging.INFO if back_env == "INFO" else logging.DEBUG) -> logging.Logger:
