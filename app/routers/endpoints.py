@@ -1,4 +1,3 @@
-from click import DateTime
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -6,7 +5,7 @@ from app import crud, schemas
 from app.database import get_db
 from app.utils.logger_config import setup_logger
 from app.utils.config import back_env
-from app import date_formating
+from app import date_formatting
 import logging
 
 # Initialize the API router
@@ -194,7 +193,7 @@ async def total_revenue_days(days_number: int, start_date: str, db: Session = De
     Returns:
     The total revenue for the specified period.
     """
-    end_date = date_formating.add_days(start_date, days_number)
+    end_date = date_formatting.add_days(start_date, days_number)
     print(end_date)
     try:
         total_revenue = crud.get_revenue_for_period(db, start_date, end_date)
@@ -217,7 +216,7 @@ async def total_revenue_months(months_number: int, start_date: str, db: Session 
     Returns:
     The total revenue for the specified period.
     """
-    end_date = date_formating.add_months(start_date, months_number)
+    end_date = date_formatting.add_months(start_date, months_number)
     print(end_date)
     try:
         total_revenue = crud.get_revenue_for_period(db, start_date, end_date)

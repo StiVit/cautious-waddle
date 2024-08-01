@@ -1,6 +1,6 @@
 # FastAPI CRUD Application
 
-This is a FastAPI application that demonstrates basic CRUD operations with a SQLite database. The application is structured into multiple files for better organization and efficiency.
+This is a FastAPI application that demonstrates basic CRUD operations with a SQLite database, as well as processing data, date formatting and data analysis. The application is structured into multiple files for better organization and efficiency.
 
 ## Project Structure
 
@@ -24,6 +24,7 @@ CAUTIOUS-WADDLE/<br>
 │ ├── init.py<br>
 │ ├── crud.py<br>
 │ ├── schemas.py<br>
+│ ├── date_formatting.py<br>
 │ └── database.py<br>
 ├── database/<br>
 │ &emsp;&emsp;&emsp;└── Online Sales Data.csv <br>
@@ -31,6 +32,7 @@ CAUTIOUS-WADDLE/<br>
 │ &emsp;&emsp;&emsp;└── docker-compose.yml <br>
 ├── process_csv.py <br>
 ├── .env.template <br>
+├── Makefile <br>
 └── main.py <br>
 
 
