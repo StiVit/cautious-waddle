@@ -24,8 +24,13 @@ def format_data(df):
     products = df[['Product Category', 'Product Name', 'Unit Price']].drop_duplicates().reset_index(drop=True)
     products["product_id"] = products.index + 1
 
-    transactions = df[['Date', 'Units Sold', 'Total Revenue', 'Region', 'Payment Method']]
-    transactions["transaction_id"] = transactions.index + 1
+    transactions = df[['Date', 'Units Sold', 'Product Name', 'Total Revenue', 'Region', 'Payment Method']]
+
+    # Merging the transactions DataFrame with the products DataFrame to get the product_id
+    transactions = transactions.merge(products[['Product Name', 'product_id']], on='Product Name', how='left')
+    transactions = transactions[['Date', 'Units Sold', 'product_id', 'Total Revenue', 'Region', 'Payment Method']]
+
+    print(transactions)
 
     products = products.rename(columns={
         'Product Category': 'product_category',
@@ -38,8 +43,7 @@ def format_data(df):
         'Units Sold': 'units_sold',
         'Total Revenue': 'total_revenue',
         'Region': 'region',
-        'Payment Method': 'payment_method',
-        'product_id': 'product_id'
+        'Payment Method': 'payment_method'
     })
 
     transactions['date'] = pd.to_datetime(transactions["date"])
@@ -63,7 +67,6 @@ def run_script():
         # Insert products
         for _, row in products.iterrows():
             session.add(Product(
-                product_id=row['product_id'],
                 product_category=row['product_category'],
                 product_name=row['product_name'],
                 unit_price=row['unit_price']
@@ -73,9 +76,8 @@ def run_script():
         # Insert transactions
         for _, row in transactions.iterrows():
             session.add(Transaction(
-                transaction_id=row['transaction_id'],
                 date=row['date'],
-                # product_id=row['product_id'],
+                product_id=row['product_id'],
                 units_sold=row['units_sold'],
                 total_revenue=row['total_revenue'],
                 region=row['region'],
