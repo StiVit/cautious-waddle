@@ -1,5 +1,7 @@
 from dotenv import load_dotenv
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 from sqlalchemy.orm import Session
 from app import crud, schemas
 from app.database import get_db
@@ -11,6 +13,10 @@ import logging
 # Initialize the API router
 router = APIRouter()
 
+# Apply a limiter to the entire router or to specific endpoints
+limiter = Limiter(key_func=get_remote_address)
+
+
 # Load environment variables from a .env file
 load_dotenv()
 
@@ -19,7 +25,8 @@ endpoint_logger = setup_logger("endpoint_logger", logging.INFO if back_env == "D
 
 
 @router.post("/transactions/", response_model=schemas.Transaction)
-async def create_transaction(transaction: schemas.TransactionCreate, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")  # Apply rate limiting to this specific route
+async def create_transaction(request: Request, transaction: schemas.TransactionCreate, db: Session = Depends(get_db)):
     """
     Create a new transaction.
 
@@ -35,7 +42,8 @@ async def create_transaction(transaction: schemas.TransactionCreate, db: Session
 
 
 @router.post("/products/", response_model=schemas.Product)
-async def create_product(product: schemas.ProductCreate, db=Depends(get_db)):
+@limiter.limit("20/minute")
+async def create_product(request: Request, product: schemas.ProductCreate, db=Depends(get_db)):
     """
     Create a new product.
 
@@ -51,7 +59,8 @@ async def create_product(product: schemas.ProductCreate, db=Depends(get_db)):
 
 
 @router.get("/transactions/{transaction_id}", response_model=schemas.Transaction)
-async def read_transaction(transaction_id: int, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+async def read_transaction(request: Request, transaction_id: int, db: Session = Depends(get_db)):
     """
     Get a transaction by ID.
 
@@ -72,7 +81,8 @@ async def read_transaction(transaction_id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/products/{product_id}", response_model=schemas.Product)
-async def read_product(product_id: int, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+async def read_product(request: Request, product_id: int, db: Session = Depends(get_db)):
     """
     Get a product by ID.
 
@@ -93,7 +103,8 @@ async def read_product(product_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/transactions/{transaction_id}", response_model=schemas.Transaction)
-async def update_transaction(transaction_id: int, transaction: schemas.TransactionUpdate,
+@limiter.limit("20/minute")
+async def update_transaction(request: Request, transaction_id: int, transaction: schemas.TransactionUpdate,
                              db: Session = Depends(get_db)):
     """
     Update a transaction by ID.
@@ -116,7 +127,8 @@ async def update_transaction(transaction_id: int, transaction: schemas.Transacti
 
 
 @router.put("/products/{product_id}", response_model=schemas.Product)
-async def update_product(product_id: int, product: schemas.ProductUpdate, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+async def update_product(request: Request, product_id: int, product: schemas.ProductUpdate, db: Session = Depends(get_db)):
     """
     Update a product by ID.
 
@@ -138,7 +150,8 @@ async def update_product(product_id: int, product: schemas.ProductUpdate, db: Se
 
 
 @router.delete("/transactions/{transaction_id}", response_model=dict)
-async def delete_transaction(transaction_id: int, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+async def delete_transaction(request: Request, transaction_id: int, db: Session = Depends(get_db)):
     """
     Delete a transaction by ID.
 
@@ -160,7 +173,8 @@ async def delete_transaction(transaction_id: int, db: Session = Depends(get_db))
 
 
 @router.get("/transactions/period/{start_date}/{end_date}", response_model=float)
-async def measure_total_revenue(start_date: str, end_date: str, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+async def measure_total_revenue(request: Request, start_date: str, end_date: str, db: Session = Depends(get_db)):
     """
     Measure total revenue for a given period.
 
@@ -181,7 +195,8 @@ async def measure_total_revenue(start_date: str, end_date: str, db: Session = De
 
 
 @router.get("/transactions/days/{start_date}/{days_number}", response_model=float)
-async def total_revenue_days(days_number: int, start_date: str, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+async def total_revenue_days(request: Request, days_number: int, start_date: str, db: Session = Depends(get_db)):
     """
     Measure total revenue for a period defined by start date and number of days.
 
@@ -204,7 +219,8 @@ async def total_revenue_days(days_number: int, start_date: str, db: Session = De
 
 
 @router.get("/transactions/months/{start_date}/{months_number}", response_model=float)
-async def total_revenue_months(months_number: int, start_date: str, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+async def total_revenue_months(request: Request, months_number: int, start_date: str, db: Session = Depends(get_db)):
     """
     Measure total revenue for a period defined by start date and number of months.
 

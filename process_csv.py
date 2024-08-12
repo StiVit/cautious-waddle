@@ -30,8 +30,6 @@ def format_data(df):
     transactions = transactions.merge(products[['Product Name', 'product_id']], on='Product Name', how='left')
     transactions = transactions[['Date', 'Units Sold', 'product_id', 'Total Revenue', 'Region', 'Payment Method']]
 
-    print(transactions)
-
     products = products.rename(columns={
         'Product Category': 'product_category',
         'Product Name': 'product_name',
