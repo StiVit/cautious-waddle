@@ -4,7 +4,7 @@ from .config import back_env
 
 def setup_logger(name: str, level: int = logging.INFO if back_env == "INFO" else logging.DEBUG) -> logging.Logger:
     """
-    Function to setup a logger with a specific name and log level.
+    Function to set up a logger with a specific name and log level.
     Logs are output to the console.
     """
     logger = logging.getLogger(name)
