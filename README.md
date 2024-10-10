@@ -145,8 +145,3 @@ Now you have your development environment set up and the application running. En
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
-
-- Inspiration
-- References
-
